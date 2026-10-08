@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Forno Caseiro — Pizzas artesanais feitas sob encomenda</title>
+<meta name="description" content="Pizzas caseiras artesanais, massa de fermentação lenta e ingredientes frescos. Peça pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg: #faf3e8; --bg2: #f1e5d1; --card: #fffaf1; --text: #2b1d14; --muted: #6f5b4b;
+    --wood: #3b2416; --wood2: #4d3020; --accent: #b3402a; --accent-h: #962f1c;
+    --gold: #d9a441; --border: #e2d2b8; --on-wood: #f7ead6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a120c; --bg2: #231910; --card: #2a1e14; --text: #f3e6d2; --muted: #b9a58e;
+      --wood: #120b07; --wood2: #1d130c; --accent: #d4553b; --accent-h: #e66a50;
+      --border: #3d2d1f; --on-wood: #f3e6d2;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a120c; --bg2: #231910; --card: #2a1e14; --text: #f3e6d2; --muted: #b9a58e;
+    --wood: #120b07; --wood2: #1d130c; --accent: #d4553b; --accent-h: #e66a50;
+    --border: #3d2d1f; --on-wood: #f3e6d2;
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 70px); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: Lato, system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6; }
+  h1, h2, h3 { font-family: "Playfair Display", Georgia, "Times New Roman", serif; line-height: 1.2; margin: 0; }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+  header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: var(--wood); color: var(--on-wood); border-bottom: 3px solid var(--gold); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; flex-wrap: wrap; }
+  .logo { font-family: "Playfair Display", Georgia, serif; font-size: 1.3rem; font-weight: 700; text-decoration: none; }
+  .logo span { color: var(--gold); }
+  nav { display: flex; gap: 18px; flex-wrap: wrap; }
+  nav a { text-decoration: none; font-size: .95rem; opacity: .9; }
+  nav a:hover { color: var(--gold); opacity: 1; }
+
+  .hero { background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 2px, transparent 2px 90px),
+      linear-gradient(160deg, var(--wood2), var(--wood)); color: var(--on-wood); padding: 64px 0 72px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: center; }
+  .eyebrow { color: var(--gold); letter-spacing: .15em; text-transform: uppercase; font-size: .8rem; font-weight: 700; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 10px 0 14px; }
+  .hero p { max-width: 460px; opacity: .92; margin: 0 0 24px; }
+  .btn { display: inline-block; padding: 12px 22px; border-radius: 999px; background: var(--accent);
+    color: #fff; text-decoration: none; font-weight: 700; border: 0; cursor: pointer; font-size: 1rem; font-family: inherit; }
+  .btn:hover { background: var(--accent-h); }
+  .btn.ghost { background: transparent; border: 2px solid var(--gold); color: var(--on-wood); margin-left: 8px; }
+  .btn.ghost:hover { background: rgba(217,164,65,.15); }
+  .hero svg { width: 100%; max-width: 340px; justify-self: center; filter: drop-shadow(0 18px 24px rgba(0,0,0,.45)); }
+
+  section { padding: 64px 0; }
+  section.alt { background: var(--bg2); }
+  .title { text-align: center; margin-bottom: 36px; }
+  .title small { color: var(--accent); letter-spacing: .15em; text-transform: uppercase; font-weight: 700; font-size: .78rem; }
+  .title h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin-top: 6px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px;
+    display: flex; flex-direction: column; gap: 8px; }
+  .card h3 { font-size: 1.2rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1; }
+  .card .row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+  .preco { font-family: "Playfair Display", Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--accent); }
+  .btn.small { padding: 8px 16px; font-size: .9rem; }
+  .nota { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 22px; }
+
+  .sobre { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+  .sobre p { color: var(--muted); }
+  .dest { display: grid; gap: 14px; }
+  .dest div { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--gold);
+    border-radius: 10px; padding: 14px 16px; }
+  .dest b { display: block; }
+  .dest span { color: var(--muted); font-size: .92rem; }
+
+  .passos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; counter-reset: p; }
+  .passo { text-align: center; padding: 10px 14px; }
+  .passo::before { counter-increment: p; content: counter(p); display: inline-grid; place-items: center;
+    width: 44px; height: 44px; border-radius: 50%; background: var(--wood); color: var(--gold);
+    font-family: "Playfair Display", Georgia, serif; font-size: 1.2rem; margin-bottom: 10px; }
+  .passo p { margin: 6px 0 0; color: var(--muted); font-size: .95rem; }
+
+  .contato { text-align: center; }
+  .contato ul { list-style: none; padding: 0; margin: 0 0 24px; color: var(--muted); }
+  .contato li { margin: 4px 0; }
+
+  footer { background: var(--wood); color: var(--on-wood); text-align: center; padding: 24px 20px; font-size: .9rem; border-top: 3px solid var(--gold); }
+  footer small { opacity: .7; }
+
+  @media (max-width: 720px) {
+    .hero .wrap, .sobre { grid-template-columns: 1fr; }
+    .hero svg { order: -1; max-width: 220px; }
+    .btn.ghost { margin: 10px 0 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#home">Forno <span>Caseiro</span></a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="home">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Pizzas artesanais · Sob encomenda</div>
+      <h1>Pizza de verdade, feita em casa, com calma.</h1>
+      <p>Massa de fermentação lenta, molho preparado no dia e ingredientes frescos. Cada pizza sai do forno pensada para a sua mesa.</p>
+      <a class="btn" href="#cardapio">Ver cardápio</a>
+      <a class="btn ghost" href="#" data-pedir="">Pedir no WhatsApp</a>
+    </div>
+    <svg viewBox="0 0 200 200" role="img" aria-label="Ilustração de uma pizza">
+      <circle cx="100" cy="100" r="94" fill="#c98a45"/>
+      <circle cx="100" cy="100" r="82" fill="#b3402a"/>
+      <circle cx="100" cy="100" r="76" fill="#f2c15a"/>
+      <g fill="#a3301f">
+        <circle cx="70" cy="75" r="11"/><circle cx="125" cy="70" r="11"/><circle cx="100" cy="112" r="11"/>
+        <circle cx="62" cy="122" r="11"/><circle cx="138" cy="120" r="11"/><circle cx="100" cy="55" r="9"/>
+      </g>
+      <g fill="#3f7a35">
+        <ellipse cx="85" cy="95" rx="6" ry="3" transform="rotate(30 85 95)"/>
+        <ellipse cx="118" cy="95" rx="6" ry="3" transform="rotate(-25 118 95)"/>
+        <ellipse cx="100" cy="140" rx="6" ry="3"/>
+        <ellipse cx="78" cy="140" rx="5" ry="2.5" transform="rotate(20 78 140)"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<section id="cardapio">
+  <div class="wrap">
+    <div class="title"><small>Cardápio</small><h2>Sabores da casa</h2></div>
+    <div class="grid" id="lista"></div>
+    <p class="nota">Pizza grande (8 fatias). Valores e sabores de exemplo — ajuste para os seus.</p>
+  </div>
+</section>
+
+<section class="alt" id="sobre">
+  <div class="wrap sobre">
+    <div>
+      <div class="title" style="text-align:left;margin-bottom:16px"><small>Sobre</small><h2>Feita em casa, do jeito que deve ser</h2></div>
+      <p>Tudo começou na cozinha de casa, com uma receita de família e muita vontade de acertar a massa. Hoje, cada pizza é feita em pequenas quantidades, para chegar quentinha e com sabor de pizza caseira de verdade.</p>
+      <p>Aqui não tem pressa nem atalho: a massa descansa, o molho cozinha devagar e o recheio é generoso.</p>
+    </div>
+    <div class="dest">
+      <div><b>Massa de fermentação lenta</b><span>Leve, aerada e com borda crocante.</span></div>
+      <div><b>Ingredientes frescos</b><span>Molho feito no dia e queijos de qualidade.</span></div>
+      <div><b>Produção sob encomenda</b><span>Feita depois do seu pedido, sem estoque parado.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap">
+    <div class="title"><small>Como pedir</small><h2>Simples assim</h2></div>
+    <div class="passos">
+      <div class="passo"><h3>Escolha o sabor</h3><p>Veja o cardápio e toque em “Pedir”.</p></div>
+      <div class="passo"><h3>Confirme no WhatsApp</h3><p>A conversa já abre com o seu pedido pronto.</p></div>
+      <div class="passo"><h3>Receba ou retire</h3><p>Combinamos horário e forma de entrega.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt contato" id="contato">
+  <div class="wrap">
+    <div class="title"><small>Contato</small><h2>Vamos pedir uma pizza?</h2></div>
+    <ul>
+      <li>Pedidos de quinta a domingo, a partir das 18h</li>
+      <li>Retirada no local ou entrega combinada</li>
+      <li>Instagram: @fornocaseiro</li>
+    </ul>
+    <a class="btn" href="#" data-pedir="">Chamar no WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <div>Forno Caseiro · Pizzas artesanais</div>
+  <small>© <span id="ano"></span> Todos os direitos reservados</small>
+</footer>
+
+<script>
+  // >>> TROQUE pelo seu número: 55 + DDD + número, só dígitos
+  const WHATS = "5551900000000";
+
+  const pizzas = [
+    { nome: "Margherita", desc: "Molho de tomate artesanal, muçarela, tomate fresco e manjericão.", preco: 48 },
+    { nome: "Calabresa", desc: "Calabresa fatiada, cebola, muçarela e orégano.", preco: 52 },
+    { nome: "Quatro Queijos", desc: "Muçarela, provolone, parmesão e gorgonzola.", preco: 58 },
+    { nome: "Frango com Catupiry", desc: "Frango desfiado temperado e catupiry cremoso.", preco: 56 },
+    { nome: "Portuguesa", desc: "Presunto, ovos, cebola, ervilha, azeitonas e muçarela.", preco: 56 },
+    { nome: "Doce de Leite com Banana", desc: "Doce de leite, banana e canela. Para fechar a refeição.", preco: 50 }
+  ];
+
+  function link(texto) {
+    return "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(texto);
+  }
+
+  const lista = document.getElementById("lista");
+  pizzas.forEach(p => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `<h3>${p.nome}</h3><p>${p.desc}</p>
+      <div class="row"><span class="preco">R$ ${p.preco},00</span>
+      <a class="btn small" target="_blank" rel="noopener" href="${link("Olá! Quero pedir uma pizza de " + p.nome + ".")}">Pedir</a></div>`;
+    lista.appendChild(el);
+  });
+
+  document.querySelectorAll("[data-pedir]").forEach(a => {
+    a.href = link("Olá! Gostaria de fazer um pedido.");
+    a.target = "_blank";
+    a.rel = "noopener";
+  });
+
+  document.getElementById("ano").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
